@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>管理员界面</title>
+<link rel="stylesheet" href="layui/css/layui.css" media="all">
+<script src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<!-- 导航栏 -->
+	<ul class="layui-nav"> 
+		<li class="layui-nav-item layui-this">
+	    <a href="admin.html">管理员<span class=""></span></a>
+	  </li> 
+	  <li class="layui-nav-item">
+	    <a href="adminManageUser.html">用户管理<span class=""></span></a>
+	  </li>
+	  <li class="layui-nav-item">
+	    <a href="adminManageBusiness.html">商家管理<span class=""></span></a>
+	  </li>
+	</ul>
+
+	<script>
+	//注意：导航 依赖 element 模块，否则无法进行功能性操作
+	layui.use('element', function(){
+	  var element = layui.element;
+	  
+	  //…
+	});
+	
+/* 	$(function(){  
+		$.ajax({
+		    url: "getLoginUserInfo.action",
+		    data: {name: 'jenny'},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {
+		        //data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
+		        $("#titleUsername").text(data.username);
+		        $("#userId").val(data.userId);
+		        $("#username").val(data.username);
+		        $("#account").val(data.account);
+		        alert(data.sex);
+		        if (data.sex=='女') {
+		        	//$("#sexboy").prop("checked","");
+		        	$("#sexgirl").prop("checked","checked");
+				}else{
+					$("#sexboy").prop("checked","checked");
+		        	//$("#sexgirl").prop("checked",false);
+				}
+
+		        $("#age").val(data.age);
+		        $("#phoneNumber").val(data.phoneNumber);
+		        $("#address").text(data.address);
+		    }
+		});
+	});  */
+	
+	</script>
+</body>
+</html>

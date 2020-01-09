@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户界面</title>
+<link rel="stylesheet" href="layui/css/layui.css" media="all">
+<script src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<input id="userId" type="number" style="display:none"></input>
+	<ul class="layui-nav">
+	  <li class="layui-nav-item">
+	    <a id="titleUsername" href="user.html">用户名</a>
+	    <dl class="layui-nav-child">
+	      <dd><a href="login.html">退出</a></dd>
+	    </dl>
+	   </li>
+	   
+	  <li class="layui-nav-item layui-this">
+	    <a href="">商城<span class=""></span></a>
+	  </li>
+	  
+
+	  <li class="layui-nav-item">
+	    <a href="myOrder.html">我的订单<span class=""></span></a>
+	  </li>
+	</ul>
+	<!-- 商品栏 -->
+	<table class="layui-table">
+	  <colgroup>
+	    <col width="50">
+	    <col width="50">
+	    <col width="50">
+	    <col width="150">
+	  </colgroup>
+	  <thead>
+	    <tr>
+	      <th>名称</th>
+	      <th>价格</th>
+	      <th>数量</th>
+	      <th>简介</th>
+	    </tr> 
+	  </thead>
+	  <tbody id="productList">
+	  	<!-- 商品列表 -->
+	  </tbody>
+	  
+	</table>
+	
+	
+	<script>
+	//注意：导航 依赖 element 模块，否则无法进行功能性操作
+	layui.use('element', function(){
+	  var element = layui.element;
+	  
+	  //…
+	});
+	</script>
+	<script type="text/javascript">
+	$(function(){  
+		$.ajax({
+		    url: "getLoginUserInfo.action",
+		    data: {name: 'jenny'},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {
+		        $("#titleUsername").text(data.username);
+		        $("#userId").val(data.userId);
+		        
+		    }
+		});
+		
+		$.ajax({
+		    url: "getProductListByName.action",
+		    data: {productName: ''},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {	    	
+		    	var productList = document.getElementById('productList');
+		    	//alert(data);
+		    	//添加商品列表
+		    	for (var i = 0; i < data.length; i++) {
+					var insertStr = document.createElement("tr");
+					var productName = document.createElement("td");
+					var price = document.createElement("td");
+					var numbers = document.createElement("td");
+					var productInfo = document.createElement("td");
+					var buy = document.createElement("td");
+					
+					productName.innerHTML ="<a href='"+"userBuyProduct.html?productId="+data[i].productId+"'>"+data[i].productName+"</a>"
+					//productName.href="changeProduct.html?productId=10";
+					price.innerHTML = data[i].price;
+					numbers.innerHTML = data[i].numbers;
+					productInfo.innerHTML =data[i].productInfo;
+					//buy.innerHTML="<a href='"+"buyProduct.html?productId="+data[i].productId+"'>"+"购买"+"</a>"
+					insertStr.appendChild(productName);
+					insertStr.appendChild(price);
+					insertStr.appendChild(numbers);
+					insertStr.appendChild(productInfo);
+					//insertStr.appendChild(buy);
+					productList.appendChild(insertStr);
+		    	}
+		    }
+		});
+		
+	}); 
+	</script>
+</body>
+</html>

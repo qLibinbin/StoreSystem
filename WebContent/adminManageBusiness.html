@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>商家管理</title>
+<link rel="stylesheet" href="layui/css/layui.css" media="all">
+<script src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<!-- 导航栏 -->
+	<ul class="layui-nav">  
+	  <li class="layui-nav-item">
+	    <a href="admin.html">管理员<span class=""></span></a>
+	  </li> 
+	  <li class="layui-nav-item">
+	    <a href="adminManageUser.html">用户管理<span class=""></span></a>
+	  </li>
+	  <li class="layui-nav-item layui-this">
+	    <a href="adminManageBusiness.html">商家管理<span class=""></span></a>
+	  </li>
+	</ul>
+
+	
+	<!-- 商家列表 -->
+	<table class="layui-table">
+	  <colgroup>
+	    <col width="50">
+	    <col width="50">
+	    <col width="50">
+	    <col width="50">
+	    <col width="50">
+	    <col width="50">
+	  </colgroup>
+	  <thead>
+	    <tr>
+	      <th>商家id</th>
+	      <th>商家名</th>
+	      <th>账号</th>
+	      <th>手机号码</th>
+	      <th>修改</th>
+	      <th>删除</th>
+	    </tr> 
+	  </thead>
+	  <tbody id="businessList">
+	  	<!-- 商家列表 -->
+	  </tbody>
+	  
+	</table>
+	<script>
+	//注意：导航 依赖 element 模块，否则无法进行功能性操作
+	layui.use('element', function(){
+	  var element = layui.element;
+	  
+	  //…
+	});
+	</script>
+	<script type="text/javascript">
+	$(function(){  
+		
+		$.ajax({
+		    url: "getAllBusiness.action",
+		    data: {productName: ''},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {	    	
+		    	var businessList = document.getElementById('businessList');
+		    	//alert(data);
+		    	//添加商品列表
+		    	for (var i = 0; i < data.length; i++) {
+					var insertStr = document.createElement("tr");
+					var businessId = document.createElement("td");
+					var businessName = document.createElement("td");
+					var account = document.createElement("td");
+					var phoneNumber = document.createElement("td");
+					var updateIt = document.createElement("td");
+					var deleteIt = document.createElement("td");
+					
+					businessId.innerHTML = data[i].businessId;
+					businessName.innerHTML = data[i].businessName;
+					account.innerHTML = data[i].account;
+					phoneNumber.innerHTML =data[i].phoneNumber;
+		
+					updateIt.innerHTML ="<a href='"+"adminChangeBusiness.html?businessId="+data[i].businessId+"'>"+"修改"+"</a>";
+					deleteIt.innerHTML ="<a href='"+"deleteBusiness.action?businessId="+data[i].businessId+"'>"+"删除"+"</a>";
+
+					insertStr.appendChild(businessId);
+					insertStr.appendChild(businessName);
+					insertStr.appendChild(account);
+					insertStr.appendChild(phoneNumber);
+					insertStr.appendChild(updateIt);
+					insertStr.appendChild(deleteIt);
+					
+					businessList.appendChild(insertStr);
+		    	}
+		    }
+		});
+		
+	}); 
+	</script>
+</body>
+</html>

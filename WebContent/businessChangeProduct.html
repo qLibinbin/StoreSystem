@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>修改商品</title>
+  <link rel="stylesheet" href="layui/css/layui.css">
+  <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+ 
+
+	<form class="layui-form layui-col-lg-offset4" action="/StoreSystem/businessSaveProduct.action">
+		<div class="layui-form-item" style="width:40%;text-align:center">
+			<h1>修改商品</h1>
+		</div>
+	  <div class="layui-form-item">
+		 <input type="number" id="productId" name="productId" required style="display:none">
+	  </div>
+	  <div class="layui-form-item">
+		 <input type="number" id="businessId" name="businessId" required style="display:none">
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">名称：</label>
+	    <div class="layui-input-inline">
+	      <input type="text" id="productName" name="productName" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">价格：</label>
+	    <div class="layui-input-inline">
+	      <input type="text" id="price" name="price" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+	    </div>
+	    <div class="layui-form-mid layui-word-aux"></div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">数量：</label>
+	    <div class="layui-input-inline">
+	      <input type="text" id="numbers" name="numbers" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+	    </div>
+	    <div class="layui-form-mid layui-word-aux"></div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">简介：</label>
+	    <div class="layui-input-inline">
+	      <input type="text" id="productInfo" name="productInfo" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+	    </div>
+	    <div class="layui-form-mid layui-word-aux"></div>
+	  </div>
+	  
+	  <div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button class="layui-btn" lay-submit lay-filter="formDemo">确认修改</button>
+	    </div>
+	  </div>
+	</form>
+
+	<script src="layui/layui.js"></script>
+	<script>
+	layui.use('form', function(){
+	  var form = layui.form;
+	  //监听提交
+	  form.on('submit(formDemo)', function(data){
+		
+	    return true;
+	  });  
+	});  
+	</script>
+	
+	<script>
+	$(function(){ 
+		var id= window.location.href.split("?")[1].split("=")[1];
+		$.ajax({
+		    url: "getProductById.action",
+		    data: {productId: id},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {
+				
+		        $("#productName").val(data.productName);
+		        $("#price").val(data.price);
+		        $("#numbers").val(data.numbers);
+		        $("#productId").val(data.productId);       
+		        $("#productInfo").val(data.productInfo);
+		        $("#businessId").val(data.businessId);
+		    }
+		});
+	}); 
+	</script>
+
+</body>
+</html>

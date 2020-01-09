@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.binbin.storesystem.mapper.BusinessMapper" >
+	<resultMap type="com.binbin.storesystem.model.Business" id="business">
+		<id property="businessId" column="business_id" />
+		<result property="businessName" column="business_name"/>
+		<result property="account" column="account"/>
+		<result property="password" column="password"/>
+		<result property="address" column="address"/>
+		<result property="phoneNumber" column="phone_number"/>
+		<result property="registerTime" column="register_time"/>
+	</resultMap>
+
+	<select id="selectBusinessByAccount" parameterType="string"
+		resultMap="business">
+		SELECT * FROM `business` WHERE account LIKE #{account}
+	</select>
+	<select id="selectBusinessById" parameterType="int"
+		resultMap="business">
+		SELECT * FROM `business` WHERE business_id = #{businessId}
+	</select>
+	
+	<select id="getAllBusiness" parameterType="int"
+		resultMap="business">
+		SELECT * FROM `business`
+	</select>
+	
+	<insert id="saveBusiness" parameterType="com.binbin.storesystem.model.Business" useGeneratedKeys="true" keyProperty="productId">
+		INSERT INTO `business`
+		(business_name,account,password,address,phone_number,register_time) VALUES
+		(#{businessName},#{account},#{password},#{address},#{phoneNumber},#{registerTime})
+	</insert>
+	
+	<update id="updateBusiness"  parameterType="com.binbin.storesystem.model.Business">
+         update business 
+         SET business_name=#{businessName},address=#{address},phone_number=#{phoneNumber}
+         where business_id=#{businessId} and account=#{account}
+    </update>
+	
+	<delete id="deleteBusinessById" parameterType="int">
+		delete from business where business_id=#{businessId}
+	</delete>
+	
+	
+</mapper>

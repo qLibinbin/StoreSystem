@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户界面</title>
+<link rel="stylesheet" href="layui/css/layui.css" media="all">
+<script src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<input id="userId" type="number" style="display:none"></input>
+	<ul class="layui-nav">
+	  <li class="layui-nav-item ">
+	    <a id="titleUsername" href="user.html">用户名</a>
+	    <dl class="layui-nav-child">
+	      <dd><a href="javascript:;">退出</a></dd>
+	    </dl>
+	   </li>
+	   
+	  <li class="layui-nav-item">
+	    <a href="store.html">商城<span class=""></span></a>
+	  </li>
+	  
+
+	  <li class="layui-nav-item layui-this">
+	    <a href="">我的订单<span class=""></span></a>
+	  </li>
+	</ul>
+	
+	<!-- 我的订单界面 -->
+	<table class="layui-table">
+	  <colgroup>
+	    <col width="50">
+	    <col width="50">
+	    <col width="50">
+	    <col width="50">
+	    <col width="50">
+	  </colgroup>
+	  <thead>
+	    <tr>
+	      <th>订单编号</th>
+	      <th>商品名称</th>
+	      <th>数量</th>
+	      <th>单价</th>
+	      <th>共计</th>
+	    </tr> 
+	  </thead>
+	  <tbody id="orderList">
+	  	<!-- 商品列表 -->
+	  </tbody>
+	  
+	</table>
+	
+	
+	<script>
+	//注意：导航 依赖 element 模块，否则无法进行功能性操作
+	layui.use('element', function(){
+	  var element = layui.element;
+	  
+	  //…
+	});
+	</script>
+	<script type="text/javascript">
+	$(function(){  
+		$.ajax({
+		    url: "getLoginUserInfo.action",
+		    data: {name: 'jenny'},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {
+		        //data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
+		        $("#titleUsername").text(data.username);
+		        
+		    }
+		});
+		
+		$.ajax({
+		    url: "getMyOrders.action",
+		    data: {name: 'jenny'},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {
+		    	var orderList = document.getElementById('orderList');
+		    	//alert(data);
+		    	//添加商品列表
+		    	for (var i = 0; i < data.length; i++) {
+					var insertStr = document.createElement("tr");
+					
+					var order_id = document.createElement("td");
+					var product_name = document.createElement("td");
+					var numbers = document.createElement("td");
+					var price = document.createElement("td");
+					var totalPrice = document.createElement("td");
+					
+					order_id.innerHTML =data[i].order_id;
+					product_name.innerHTML = data[i].product_name;
+					numbers.innerHTML = data[i].numbers;
+					price.innerHTML =data[i].price;
+					totalPrice.innerHTML =data[i].price*data[i].numbers;
+					//buy.innerHTML="<a href='"+"buyProduct.html?productId="+data[i].productId+"'>"+"购买"+"</a>"
+					insertStr.appendChild(order_id);
+					insertStr.appendChild(product_name);
+					insertStr.appendChild(numbers);
+					insertStr.appendChild(price);
+					insertStr.appendChild(totalPrice);
+					
+					orderList.appendChild(insertStr);
+		        }
+		    }
+		});
+	}); 
+	</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.binbin.storesystem.mapper.ProductMapper" >
+	<resultMap type="com.binbin.storesystem.model.Product" id="product">
+		<id property="productId" column="product_id" />
+		<result property="businessId" column="business_id"/>
+		<result property="productName" column="product_name"/>
+		<result property="price" column="price"/>
+		<result property="productInfo" column="product_info"/>
+		<result property="numbers" column="numbers"/>
+	</resultMap>
+
+	<select id="selectProductByName" parameterType="String"
+		resultMap="product">
+		SELECT * FROM `product` WHERE product_name LIKE "%"#{productName}"%"
+	</select>
+	
+	<select id="selectProductBybusinessId" parameterType="int"
+		resultMap="product">
+		SELECT * FROM `product` WHERE business_id LIKE #{businessId}
+	</select>
+	
+	<select id="selectProductById" parameterType="int"
+		resultMap="product">
+		SELECT * FROM `product` WHERE product_id LIKE #{productId}
+	</select>
+	<insert id="saveProduct" parameterType="com.binbin.storesystem.model.Product" useGeneratedKeys="true" keyProperty="productId">
+		INSERT INTO `product`
+		(business_id,product_name,price,product_info,numbers) VALUES
+		(#{businessId},#{productName},#{price},#{productInfo},#{numbers})
+	</insert>
+	
+	<update id="updateProduct"  parameterType="com.binbin.storesystem.model.Product">
+         update product 
+         SET product_name=#{productName},price=#{price},product_info=#{productInfo},numbers=#{numbers}
+         where product_id=#{productId}
+    </update>
+	
+</mapper>

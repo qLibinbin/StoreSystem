@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>商家界面</title>
+<link rel="stylesheet" href="layui/css/layui.css" media="all">
+<script src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<!-- 导航栏 -->
+	<ul class="layui-nav">
+	  <li class="layui-nav-item">
+	    <a href="business.html" id="titleBusinessName">商家名</a>
+	    <dl class="layui-nav-child">
+	      <dd><a href="javascript:;">退出</a></dd>
+	    </dl>
+	   </li>	   
+	  <li class="layui-nav-item layui-this">
+	    <a href="">商品管理<span class=""></span></a>
+	  </li>
+	  <li class="layui-nav-item">
+	    <a href="businessManageOrder.html">订单管理<span class=""></span></a>
+	  </li>
+	</ul>
+	<!-- 商品栏 -->
+	<table class="layui-table">
+	  <colgroup>
+	    <col width="50">
+	    <col width="50">
+	    <col width="50">
+	    <col width="150">
+	  </colgroup>
+	  <thead>
+	    <tr>
+	      <th>名称</th>
+	      <th>价格</th>
+	      <th>数量</th>
+	      <th>简介</th>
+	    </tr> 
+	  </thead>
+	  <a href="businessAddProduct.html"><button class="layui-btn" >添加商品</button></a>
+	  <tbody id="productList">
+	  	<!-- 商品列表 -->
+	  </tbody>
+	  
+	</table>
+	
+	 
+	<script>
+	//Demo
+	layui.use('form', function(){
+	  var form = layui.form;
+	  
+	  //监听提交
+	  form.on('submit(formDemo)', function(data){
+
+	    return true;
+	  });
+	  
+	});
+	</script>
+	<script>
+	//注意：导航 依赖 element 模块，否则无法进行功能性操作
+	layui.use('element', function(){
+	  var element = layui.element;
+	  
+	  //…
+	});
+	
+	$(function(){  
+		$.ajax({
+		    url: "getLoginBusinessInfo.action",
+		    data: {name: 'jenny'},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {
+		        $("#titleBusinessName").text(data.businessName);
+		    }
+		});
+		
+		$.ajax({
+		    url: "getLoginBusinessProductList.action",
+		    data: {name: 'jenny'},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {
+		    	
+		    	var productList = document.getElementById('productList');
+		    	//alert(data);
+		    	//添加商品列表
+		    	for (var i = 0; i < data.length; i++) {
+					var insertStr = document.createElement("tr");
+					var productName = document.createElement("td");
+					var price = document.createElement("td");
+					var numbers = document.createElement("td");
+					var productInfo = document.createElement("td");
+					
+					productName.innerHTML ="<a href='"+"businessChangeProduct.html?productId="+data[i].productId+"'>"+data[i].productName+"</a>"
+					//productName.href="changeProduct.html?productId=10";
+					price.innerHTML = data[i].price;
+					numbers.innerHTML = data[i].numbers;
+					productInfo.innerHTML =data[i].productInfo;
+					
+					insertStr.appendChild(productName);
+					insertStr.appendChild(price);
+					insertStr.appendChild(numbers);
+					insertStr.appendChild(productInfo);
+					
+					productList.appendChild(insertStr);
+		    	}
+		    }
+		});
+		
+		
+		/* $.ajax({
+		    url: "getLoginBusinessProductList.action",
+		    data: {name: 'jenny'},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {
+		        //data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
+		    }
+		}); 
+		*/
+	}); 
+	
+	</script>
+</body>
+</html>

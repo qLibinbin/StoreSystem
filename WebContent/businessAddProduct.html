@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>添加商品</title>
+  <link rel="stylesheet" href="layui/css/layui.css">
+</head>
+<body>
+ 
+
+	<form class="layui-form layui-col-lg-offset4" action="/StoreSystem/businessAddProduct.action">
+		<div class="layui-form-item" style="width:40%;text-align:center">
+			<h1>添加商品</h1>
+		</div>
+		
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">名称：</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="productName" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">价格：</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="price" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+	    </div>
+	    <div class="layui-form-mid layui-word-aux"></div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">数量：</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="numbers" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+	    </div>
+	    <div class="layui-form-mid layui-word-aux"></div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">简介：</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="productInfo" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+	    </div>
+	    <div class="layui-form-mid layui-word-aux"></div>
+	  </div>
+	  
+	  <div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button class="layui-btn" lay-submit lay-filter="formDemo">确认添加</button>
+	    </div>
+	  </div>
+	</form>
+
+	<script src="layui/layui.js"></script>
+	<script>
+	layui.use('form', function(){
+	  var form = layui.form;
+	  //监听提交
+	  form.on('submit(formDemo)', function(data){
+	
+			//layer.msg("失败成功");
+	
+	    return true;
+	  });
+	});
+</script>
+
+</body>
+</html>

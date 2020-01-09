@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>StoreSystem</display-name>
+  <welcome-file-list>
+    <welcome-file>login.html</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 加载spring容器 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!--servlet可以访问的静态资源-->
+	<servlet-mapping>
+	    <servlet-name>default</servlet-name>
+	    <url-pattern>*.gif</url-pattern>
+	    <url-pattern>*.png</url-pattern>
+	    <url-pattern>*.jpg</url-pattern>
+	    <url-pattern>*.js</url-pattern>
+	    <url-pattern>*.css</url-pattern>
+	    <url-pattern>*.xml</url-pattern>
+	    <url-pattern>*.html</url-pattern>
+	    <url-pattern>*.chm</url-pattern>
+	    <url-pattern>*.gz</url-pattern>
+	    <url-pattern>*.txt</url-pattern>
+	    <url-pattern>*.ttf</url-pattern>
+	    <url-pattern>*.woff</url-pattern>
+	    <url-pattern>*.woff2</url-pattern>
+	    <url-pattern>*.eot</url-pattern>
+	    <url-pattern>*.svg</url-pattern>
+	    <url-pattern>*.swf</url-pattern>
+	    <url-pattern>*.jst</url-pattern>
+	  </servlet-mapping>
+	<!-- springmvc的前端控制器 -->
+	<servlet>
+		<servlet-name>StoreSystem</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- contextConfigLocation不是必须的， 如果不配置contextConfigLocation， springmvc的配置文件默认在：WEB-INF/servlet的name+"-servlet.xml" -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StoreSystem</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping> 
+
+  
+</web-app>

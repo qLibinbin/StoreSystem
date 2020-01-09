@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>商家界面</title>
+<link rel="stylesheet" href="layui/css/layui.css" media="all">
+<script src="layui/layui.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<!-- 导航栏 -->
+	<ul class="layui-nav">
+	  <li class="layui-nav-item layui-this">
+	    <a href="" id="titleBusinessName">商家名</a>
+	    <dl class="layui-nav-child">
+	      <dd><a href="javascript:;">退出</a></dd>
+	    </dl>
+	   </li>	   
+	  <li class="layui-nav-item">
+	    <a href="businessManageProduct.html">商品管理<span class=""></span></a>
+	  </li>
+	  <li class="layui-nav-item">
+	    <a href="businessManageOrder.html">订单管理<span class=""></span></a>
+	  </li>
+	</ul>
+	<!-- 个人信息栏 -->
+	
+	<form class="layui-form" action="saveBusinessInfo.action">
+		<div class="layui-form-item">
+		 <input type="number" id="businessId" name="businessId" required style="display:none">
+	  	</div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">商家名:</label>    
+	    <div class="layui-input-inline">
+	      <input type="text" id="businessName" name="businessName" required autocomplete="off" class="layui-input">
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">账号:</label>    
+	    <div class="layui-input-inline">
+	      <input type="text" id="account" name="account" required autocomplete="off" class="layui-input" readonly="readonly">
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <label class="layui-form-label">手机号码:</label>    
+	    <div class="layui-input-inline">
+	      <input type="text"  id="phoneNumber" name="phoneNumber" autocomplete="off" class="layui-input">
+	    </div>
+	  </div>
+	  <div class="layui-form-item layui-form-text">
+	    <label class="layui-form-label">地址</label>
+	    <div class="layui-input-block">
+	      <textarea id="address" name="address" placeholder="请输入内容" class="layui-textarea"></textarea>
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button class="layui-btn" lay-submit lay-filter="formDemo">保存修改</button>
+	    </div>
+	  </div>
+	</form>
+	 
+	<script>
+	//Demo
+	layui.use('form', function(){
+	  var form = layui.form;
+	  
+	  //监听提交
+	  form.on('submit(formDemo)', function(data){
+
+	    return true;
+	  });
+	  
+	});
+	</script>
+	<script>
+	//注意：导航 依赖 element 模块，否则无法进行功能性操作
+	layui.use('element', function(){
+	  var element = layui.element;
+	  
+	  //…
+	});
+	
+	$(function(){  
+		$.ajax({
+		    url: "getLoginBusinessInfo.action",
+		    data: {name: 'jenny'},
+		    type: "POST",
+		    dataType: "json",
+		    success: function(data) {
+		        //data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
+		        $("#titleBusinessName").text(data.businessName);
+		        $("#businessId").val(data.businessId);
+		        $("#businessName").val(data.businessName);
+		        $("#account").val(data.account);
+		        
+		        $("#phoneNumber").val(data.phoneNumber);
+		        $("#address").val(data.address);
+		    }
+		});
+	}); 
+	
+	</script>
+</body>
+</html>

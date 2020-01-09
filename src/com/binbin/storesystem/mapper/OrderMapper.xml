@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.binbin.storesystem.mapper.OrderMapper" >
+	
+	<resultMap type="com.binbin.storesystem.model.Order" id="order">
+		<id property="orderId" column="order_id"/>
+		<result property="userId" column="user_id" />
+		<result property="isPay" column="is_pay" />
+		<result property="deliveryMethod" column="delivery_method" />
+	</resultMap>
+	
+	<!-- <resultMap type="com.binbin.storesystem.model.OrderItem" id="orderItem">
+		<result property="orderId" column="o.order_id"/>
+		<result property="userId" column="user_id" />
+		<result property="isPay" column="is_pay" />
+		<result property="deliveryMethod" column="delivery_method" />
+		<result property="buyNumber" column="numbers" />
+		<result property="productId" column="p.product_id" />
+		<result property="business_id" column="p.business_id" />
+		<result property="productName" column="product_name" />
+		<result property="price" column="price" />
+	</resultMap> -->
+	
+	<select id="selectOrderByUserId" parameterType="int"
+		resultType="com.binbin.storesystem.model.Order">
+		SELECT * FROM `orders` WHERE user_id=#{userId}
+	</select>
+	
+	<select id="selectOrderItemByUserId" parameterType="int"
+		resultType="com.binbin.storesystem.model.OrderItem">
+		SELECT o.order_id, o.user_id,o.is_pay,o.delivery_method,op.numbers,
+		p.product_id,p.business_id,p.product_name,p.price
+		FROM orders o,order_include_product op,product p 
+		WHERE p.product_id=op.product_id and o.order_id=op.order_id and o.user_id=#{userId}
+	</select>
+	
+	<select id="selectOrderItemByBusinessId" parameterType="int"
+		resultType="com.binbin.storesystem.model.OrderItem">
+		SELECT o.order_id, o.user_id,o.is_pay,o.delivery_method,op.numbers,
+		p.product_id,p.business_id,p.product_name,p.price
+		FROM orders o,order_include_product op,product p 
+		WHERE p.product_id=op.product_id and o.order_id=op.order_id and p.business_id=#{businessId}
+	</select>
+	
+	<insert id="saveOrder" parameterType="com.binbin.storesystem.model.Order" useGeneratedKeys="true" keyProperty="orderId">
+		INSERT INTO `orders`
+		(user_id,is_pay,delivery_method) VALUES
+		(#{userId},#{isPay},#{deliveryMethod})
+	</insert>
+	
+	<insert id="addProductToOrder" >
+		INSERT INTO `order_include_product`
+		(order_id,product_id,numbers) VALUES
+		(#{orderId},#{productId},#{buyNumbers})
+	</insert>
+	
+	
+	
+	
+</mapper>

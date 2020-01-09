@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.binbin.storesystem.mapper.AdminMapper" >
+
+	<select id="selectAdminByAccount" parameterType="string"
+		resultType="com.binbin.storesystem.model.Admin">
+		SELECT * FROM `admin` WHERE account LIKE #{account}
+	</select>
+	
+	<insert id="saveAdmin" parameterType="com.binbin.storesystem.model.Admin" >
+		INSERT INTO `admin`
+		(account,password) VALUES
+		(#{account},#{password})
+	</insert>
+	
+</mapper>
